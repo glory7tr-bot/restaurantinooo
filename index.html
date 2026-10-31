@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Savora — Restaurant &amp; Bar</title>
+<style>
+  :root {
+    --gold: #c9a24b;
+    --cream: #f3ece2;
+    --muted: #b3a799;
+    --card: #1f1a15;
+    --ink: #17120c;
+    --bg-a: #171310;
+    --bg-b: #0f0d0b;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg-b);
+    color: var(--cream);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4, p { margin: 0; }
+  a { color: inherit; }
+
+  /* Sections */
+  .section { width: 100%; padding: 80px 24px; }
+  .section > .inner { margin: 0 auto; }
+  .bg-a { background: var(--bg-a); }
+  .bg-b { background: var(--bg-b); }
+
+  #home {
+    background: linear-gradient(160deg, #3a2a18 0%, #120e0b 100%);
+    padding: 120px 24px;
+  }
+  #home .inner { max-width: 720px; }
+  #about .inner, #menu .inner, #contact .inner { max-width: 1100px; }
+  #reserve .inner { max-width: 680px; }
+
+  .center { text-align: center; }
+
+  .eyebrow {
+    color: var(--gold);
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  h1 { font-size: 42px; line-height: 1.2; text-align: center; margin: 16px 0; }
+  h2 { font-size: 34px; line-height: 1.25; text-align: center; margin: 12px 0 16px; }
+  h3 { color: var(--gold); font-size: 28px; text-align: center; margin: 0 0 24px; scroll-margin-top: 24px; }
+  h4 { color: var(--gold); font-size: 19px; text-align: center; margin-bottom: 8px; }
+  .lead { font-size: 18px; text-align: center; }
+  .muted { color: var(--muted); text-align: center; }
+  .small { font-size: 15px; }
+
+  /* Buttons */
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 28px;
+  }
+  .btn {
+    display: inline-block;
+    padding: 12px 28px;
+    border-radius: 999px;
+    font-size: 17px;
+    font-weight: 500;
+    text-decoration: none;
+    line-height: 1.4;
+    border: 2px solid transparent;
+    transition: transform .15s ease, opacity .15s ease, background-color .15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-solid { background: var(--gold); color: var(--ink); border-color: var(--gold); }
+  .btn-solid:hover { opacity: .9; }
+  .btn-outline { background: transparent; color: var(--cream); border-color: currentColor; }
+  .btn-outline:hover { background: rgba(243, 236, 226, .08); }
+  .btn-sm { font-size: 14px; padding: 8px 20px; }
+
+  .spacer-24 { height: 24px; }
+  .spacer-16 { height: 16px; }
+  .spacer-32 { height: 32px; }
+  .spacer-menu { height: 40px; }
+
+  /* Columns */
+  .columns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+  .columns > div { flex: 1 1 220px; }
+
+  /* Menu cards */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(16rem, 100%), 1fr));
+    gap: 24px;
+  }
+  .card {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 14px 14px 20px;
+  }
+  .card img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 12px;
+    background: #2a231c;
+  }
+  .card-row {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: 14px;
+  }
+  .card-row h4 {
+    color: var(--cream);
+    text-align: left;
+    margin: 0;
+    min-width: 0;
+  }
+  .price {
+    flex: none;
+    background: var(--gold);
+    color: var(--ink);
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-size: 28px;
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1.4;
+    white-space: nowrap;
+    margin: 0;
+  }
+  .card p.desc {
+    color: var(--muted);
+    font-size: 15px;
+    margin-top: 8px;
+  }
+
+  .menu-nav { margin: 24px 0 0; }
+  .note { color: var(--muted); font-size: 14px; text-align: center; }
+  .hours { text-align: center; }
+  .hours-title { color: var(--gold); font-size: 22px; text-align: center; margin-bottom: 8px; }
+
+  footer.section { padding: 28px 24px; }
+
+  @media (max-width: 600px) {
+    #home { padding: 80px 20px; }
+    h1 { font-size: 34px; }
+    h2 { font-size: 28px; }
+    .section { padding: 64px 20px; }
+    .price { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="section" id="home">
+  <div class="inner">
+    <p class="eyebrow">Restaurant &amp; Bar</p>
+    <h1>Taste the art of good food</h1>
+    <p class="lead">Seasonal ingredients, honest cooking and warm hospitality — a table where every meal feels like an occasion.</p>
+    <div class="buttons">
+      <a class="btn btn-solid" href="https://wa.me/0633553539?text=Hello%2C%20I%20would%20like%20to%20book%20a%20table">Book on WhatsApp</a>
+      <a class="btn btn-outline" href="#menu">View the menu</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section bg-a" id="about">
+  <div class="inner">
+    <p class="eyebrow">Our story</p>
+    <h2>Cooked with care, served with heart</h2>
+    <p class="muted">Savora began with a simple idea: great food should feel generous. Our chefs work every morning with local farmers, fishermen and bakers, turning the best of each season into dishes that are familiar, surprising and always honest.</p>
+    <div class="spacer-24"></div>
+    <div class="columns">
+      <div>
+        <h4>Fresh &amp; local</h4>
+        <p class="muted small">Ingredients from nearby farms and markets, delivered daily.</p>
+      </div>
+      <div>
+        <h4>Made in-house</h4>
+        <p class="muted small">Bread, sauces and desserts prepared from scratch every day.</p>
+      </div>
+      <div>
+        <h4>Warm service</h4>
+        <p class="muted small">A friendly team that makes every visit feel special.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="section bg-b" id="menu">
+  <div class="inner">
+    <p class="eyebrow">The menu</p>
+    <h2 id="menu-title">Made fresh, every day</h2>
+    <p class="muted">Tap a section to jump to it. Our full menu changes with the seasons.</p>
+
+    <div class="buttons menu-nav">
+      <a class="btn btn-outline btn-sm" href="#starters">Starters</a>
+      <a class="btn btn-outline btn-sm" href="#mains">Mains</a>
+      <a class="btn btn-outline btn-sm" href="#desserts">Desserts</a>
+      <a class="btn btn-outline btn-sm" href="#drinks">Drinks</a>
+    </div>
+
+    <div class="spacer-menu"></div>
+
+    <!-- Starters -->
+    <h3 id="starters">Starters</h3>
+    <div class="grid">
+      <div class="card">
+        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026015.png?w=1024" alt="Burrata and tomato">
+        <div class="card-row"><h4>Burrata &amp; Tomato</h4><p class="price">55 DH</p></div>
+        <p class="desc">Creamy burrata, ripe tomatoes, basil oil, toasted pine nuts.</p>
+      </div>
+      <div class="card">
+        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026016.png?w=1024" alt="Grilled octopus">
+        <div class="card-row"><h4>Grilled Octopus</h4><p class="price">75 DH</p></div>
+        <p class="desc">Charred octopus, smoked paprika potatoes, lemon dressing.</p>
+      </div>
+      <div class="card">
+        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/restorantfood7-6ae5fc6d30baa.png?w=1024" alt="Bowl of pumpkin soup topped with cream, seeds, and herbs beside rustic bread">
+        <div class="card-row"><h4>Pumpkin Soup</h4><p class="price">45 DH</p></div>
+        <p class="desc">Spiced pumpkin, coconut cream, toasted seeds, warm bread.</p>
+      </div>
+      <div class="card">
+        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/restorantfood7-6ae5fd0097c14.png?w=1024" alt="Plate of fried calamari with dipping sauce, lemon wedge, and herbs">
+        <div class="card-row"><h4>Crispy Calamari</h4><p class="price">55 DH</p></div>
+        <p class="desc">Lightly fried calamari, garlic aioli, fresh lemon.</p>
+      </div>
+    </div>
+
+    <div class="spacer-32"></div>
+
+    <!-- Mains -->
+    <h3 id="mains">Mains</h3>
+    <div class="grid">
+      <div class="card">
+        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026030.jpg?w=1024" alt="Braised lamb shank">
+        <div class="card-row"><h4>Braised Lamb Shank</h4><p class="price">130 DH</p></div>
+        <p class="desc">Eight-hour lamb, root vegetable purée, rosemary jus.</p>
+      </div>
+      <div class="card">
+        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/restorantfood7-6ae60b7d3ad4d.png?w=1024" alt="Crispy-skinned fish with vegetables, lemon, and white wine">
+        <div class="card-row"><h4>Pan-Seared Sea Bass</h4><p class="price">120 DH</p></div>
+        <p class="desc">Crisp skin, saffron sauce, charred greens, new potatoes.</p>
+      </div>
+      <div class="card">
+        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/restorantfood7-6ae60acc1e552.png?w=1024" alt="Grilled bone-in steak with roasted potatoes, asparagus, and sauce">
+        <div class="card-row"><h4>Grilled Ribeye</h4><p class="price">160 DH</p></div>
+        <p class="desc">300 g ribeye, peppercorn sauce, hand-cut fries.</p>
+      </div>
+    </div>
+
+    <div class="spacer-32"></div>
+
+    <!-- Desserts -->
+    <h3 id="desserts">Desserts</h3>
+    <div class="grid">
+      <div class="card">
+        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026021-1.png?w=1024" alt="Chocolate fondant">
+        <div class="card-row"><h4>Chocolate Fondant</h4><p class="price">45 DH</p></div>
+        <p class="desc">Warm dark chocolate centre, vanilla ice cream.</p>
+      </div>
+      <div class="card">
+        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026028.jpg?w=1024" alt="Crème brûlée">
+        <div class="card-row"><h4>Crème Brûlée</h4><p class="price">40 DH</p></div>
+        <p class="desc">Classic vanilla custard with a caramelised crust.</p>
+      </div>
+      <div class="card">
+        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026024.jpg?w=1024" alt="Fruit tart">
+        <div class="card-row"><h4>Fruit Tart</h4><p class="price">40 DH</p></div>
+        <p class="desc">Buttery pastry, almond cream, fruit of the season.</p>
+      </div>
+      <div class="card">
+        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026027-1.jpg?w=1024" alt="Affogato">
+        <div class="card-row"><h4>Affogato</h4><p class="price">35 DH</p></div>
+        <p class="desc">Vanilla gelato with a shot of hot espresso.</p>
+      </div>
+    </div>
+
+    <div class="spacer-32"></div>
+
+    <!-- Drinks -->
+    <h3 id="drinks">Drinks</h3>
+    <div class="grid">
+      <div class="card">
+        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026025.jpg?w=1024" alt="Mint lemonade">
+        <div class="card-row"><h4>Mint Lemonade</h4><p class="price">25 DH</p></div>
+        <p class="desc">Pressed lemon, fresh mint, a touch of honey.</p>
+      </div>
+      <div class="card">
+        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026026.jpg?w=1024" alt="House mocktail">
+        <div class="card-row"><h4>House Mocktail</h4><p class="price">35 DH</p></div>
+        <p class="desc">Seasonal fruit, ginger, sparkling water.</p>
+      </div>
+      <div class="card">
+        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026023-1.jpg?w=1024" alt="Specialty coffee">
+        <div class="card-row"><h4>Specialty Coffee</h4><p class="price">20 DH</p></div>
+        <p class="desc">Espresso, cappuccino, flat white or filter.</p>
+      </div>
+      <div class="card">
+        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026022-1.png?w=1024" alt="Artisan tea">
+        <div class="card-row"><h4>Artisan Tea</h4><p class="price">20 DH</p></div>
+        <p class="desc">A rotating selection of loose-leaf teas.</p>
+      </div>
+    </div>
+
+    <div class="spacer-16"></div>
+    <p class="note">Please tell us about any allergies or dietary needs — we'll be happy to adapt.</p>
+  </div>
+</section>
+
+<!-- RESERVATIONS -->
+<section class="section bg-a" id="reserve">
+  <div class="inner">
+    <p class="eyebrow">Reservations</p>
+    <h2>Book your table</h2>
+    <p class="muted">Send us your request on WhatsApp and we will confirm it with you directly.</p>
+    <div class="buttons">
+      <a class="btn btn-solid" href="https://wa.me/0633553539?text=Hello%2C%20I%20would%20like%20to%20book%20a%20table">Book on WhatsApp</a>
+      <a class="btn btn-outline" href="tel:+112633553639">Call us</a>
+      <a class="btn btn-outline" href="mailto:glory.7tr@gmail.com">Contact us</a>
+    </div>
+    <div class="spacer-16"></div>
+    <h3 class="hours-title">Opening hours</h3>
+    <p class="hours">Monday – Thursday: 12:00 – 23:00<br>Friday – Saturday: 12:00 – 00:00<br>Sunday: 12:00 – 22:00</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section bg-b" id="contact">
+  <div class="inner">
+    <p class="eyebrow">Visit us</p>
+    <h2>Find your way to Savora</h2>
+    <div class="spacer-24"></div>
+    <div class="columns">
+      <div>
+        <h4>Address</h4>
+        <p class="muted">12 Main Street, Your City</p>
+      </div>
+      <div>
+        <h4>Phone</h4>
+        <p class="muted">+112 0633553639</p>
+      </div>
+      <div>
+        <h4>Email</h4>
+        <p class="muted">glory.7tr@gmail.com</p>
+      </div>
+    </div>
+    <div class="buttons">
+      <a class="btn btn-solid" href="https://www.google.com/maps/search/?api=1&amp;query=12%20Main%20Street%2C%20Your%20City">Get directions</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="section bg-b">
+  <div class="inner" style="max-width:1100px">
+    <p class="note">© 2026 Savora. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>
