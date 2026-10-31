@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,12 +20,45 @@
     margin: 0;
     background: var(--bg-b);
     color: var(--cream);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans Arabic", Tahoma, sans-serif;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
+  html[lang="ar"] body { line-height: 1.8; }
   h1, h2, h3, h4, p { margin: 0; }
   a { color: inherit; }
+
+  /* Language switcher */
+  .lang-switch {
+    position: fixed;
+    top: 14px;
+    inset-inline-end: 14px;
+    z-index: 50;
+    display: flex;
+    gap: 2px;
+    padding: 4px;
+    background: rgba(15, 13, 11, .78);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(201, 162, 75, .35);
+    border-radius: 999px;
+  }
+  .lang-switch button {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    color: var(--cream);
+    font: inherit;
+    font-size: 13px;
+    line-height: 1;
+    padding: 8px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background-color .15s ease, color .15s ease;
+  }
+  .lang-switch button:hover { background: rgba(243, 236, 226, .1); }
+  .lang-switch button[aria-pressed="true"] { background: var(--gold); color: var(--ink); font-weight: 600; }
+  .lang-switch button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
   /* Sections */
   .section { width: 100%; padding: 80px 24px; }
@@ -41,8 +74,6 @@
   #about .inner, #menu .inner, #contact .inner { max-width: 1100px; }
   #reserve .inner { max-width: 680px; }
 
-  .center { text-align: center; }
-
   .eyebrow {
     color: var(--gold);
     font-size: 13px;
@@ -50,6 +81,7 @@
     text-transform: uppercase;
     text-align: center;
   }
+  html[dir="rtl"] .eyebrow { letter-spacing: 0; font-size: 15px; }
   h1 { font-size: 42px; line-height: 1.2; text-align: center; margin: 16px 0; }
   h2 { font-size: 34px; line-height: 1.25; text-align: center; margin: 12px 0 16px; }
   h3 { color: var(--gold); font-size: 28px; text-align: center; margin: 0 0 24px; scroll-margin-top: 24px; }
@@ -126,7 +158,7 @@
   }
   .card-row h4 {
     color: var(--cream);
-    text-align: left;
+    text-align: start;
     margin: 0;
     min-width: 0;
   }
@@ -142,6 +174,7 @@
     line-height: 1.4;
     white-space: nowrap;
     margin: 0;
+    direction: ltr;
   }
   .card p.desc {
     color: var(--muted);
@@ -152,12 +185,14 @@
   .menu-nav { margin: 24px 0 0; }
   .note { color: var(--muted); font-size: 14px; text-align: center; }
   .hours { text-align: center; }
+  .hours span { display: block; }
   .hours-title { color: var(--gold); font-size: 22px; text-align: center; margin-bottom: 8px; }
+  .ltr { direction: ltr; unicode-bidi: isolate; display: inline-block; }
 
   footer.section { padding: 28px 24px; }
 
   @media (max-width: 600px) {
-    #home { padding: 80px 20px; }
+    #home { padding: 88px 20px 80px; }
     h1 { font-size: 34px; }
     h2 { font-size: 28px; }
     .section { padding: 64px 20px; }
@@ -167,15 +202,22 @@
 </head>
 <body>
 
+<!-- LANGUAGE SWITCHER -->
+<div class="lang-switch" role="group" aria-label="Language">
+  <button type="button" data-lang="en" lang="en" aria-pressed="true">EN</button>
+  <button type="button" data-lang="fr" lang="fr" aria-pressed="false">FR</button>
+  <button type="button" data-lang="ar" lang="ar" aria-pressed="false">العربية</button>
+</div>
+
 <!-- HERO -->
 <section class="section" id="home">
   <div class="inner">
-    <p class="eyebrow">Restaurant &amp; Bar</p>
-    <h1>Taste the art of good food</h1>
-    <p class="lead">Seasonal ingredients, honest cooking and warm hospitality — a table where every meal feels like an occasion.</p>
+    <p class="eyebrow" data-i18n="hero.eyebrow">Restaurant &amp; Bar</p>
+    <h1 data-i18n="hero.title">Taste the art of good food</h1>
+    <p class="lead" data-i18n="hero.lead">Seasonal ingredients, honest cooking and warm hospitality — a table where every meal feels like an occasion.</p>
     <div class="buttons">
-      <a class="btn btn-solid" href="https://wa.me/0633553539?text=Hello%2C%20I%20would%20like%20to%20book%20a%20table">Book on WhatsApp</a>
-      <a class="btn btn-outline" href="#menu">View the menu</a>
+      <a class="btn btn-solid" data-wa href="https://wa.me/0633553539?text=Hello%2C%20I%20would%20like%20to%20book%20a%20table" data-i18n="hero.book">Book on WhatsApp</a>
+      <a class="btn btn-outline" href="#menu" data-i18n="hero.menu">View the menu</a>
     </div>
   </div>
 </section>
@@ -183,22 +225,22 @@
 <!-- ABOUT -->
 <section class="section bg-a" id="about">
   <div class="inner">
-    <p class="eyebrow">Our story</p>
-    <h2>Cooked with care, served with heart</h2>
-    <p class="muted">Savora began with a simple idea: great food should feel generous. Our chefs work every morning with local farmers, fishermen and bakers, turning the best of each season into dishes that are familiar, surprising and always honest.</p>
+    <p class="eyebrow" data-i18n="about.eyebrow">Our story</p>
+    <h2 data-i18n="about.title">Cooked with care, served with heart</h2>
+    <p class="muted" data-i18n="about.text">Savora began with a simple idea: great food should feel generous. Our chefs work every morning with local farmers, fishermen and bakers, turning the best of each season into dishes that are familiar, surprising and always honest.</p>
     <div class="spacer-24"></div>
     <div class="columns">
       <div>
-        <h4>Fresh &amp; local</h4>
-        <p class="muted small">Ingredients from nearby farms and markets, delivered daily.</p>
+        <h4 data-i18n="about.c1.t">Fresh &amp; local</h4>
+        <p class="muted small" data-i18n="about.c1.d">Ingredients from nearby farms and markets, delivered daily.</p>
       </div>
       <div>
-        <h4>Made in-house</h4>
-        <p class="muted small">Bread, sauces and desserts prepared from scratch every day.</p>
+        <h4 data-i18n="about.c2.t">Made in-house</h4>
+        <p class="muted small" data-i18n="about.c2.d">Bread, sauces and desserts prepared from scratch every day.</p>
       </div>
       <div>
-        <h4>Warm service</h4>
-        <p class="muted small">A friendly team that makes every visit feel special.</p>
+        <h4 data-i18n="about.c3.t">Warm service</h4>
+        <p class="muted small" data-i18n="about.c3.d">A friendly team that makes every visit feel special.</p>
       </div>
     </div>
   </div>
@@ -207,164 +249,168 @@
 <!-- MENU -->
 <section class="section bg-b" id="menu">
   <div class="inner">
-    <p class="eyebrow">The menu</p>
-    <h2 id="menu-title">Made fresh, every day</h2>
-    <p class="muted">Tap a section to jump to it. Our full menu changes with the seasons.</p>
+    <p class="eyebrow" data-i18n="menu.eyebrow">The menu</p>
+    <h2 id="menu-title" data-i18n="menu.title">Made fresh, every day</h2>
+    <p class="muted" data-i18n="menu.sub">Tap a section to jump to it. Our full menu changes with the seasons.</p>
 
     <div class="buttons menu-nav">
-      <a class="btn btn-outline btn-sm" href="#starters">Starters</a>
-      <a class="btn btn-outline btn-sm" href="#mains">Mains</a>
-      <a class="btn btn-outline btn-sm" href="#desserts">Desserts</a>
-      <a class="btn btn-outline btn-sm" href="#drinks">Drinks</a>
+      <a class="btn btn-outline btn-sm" href="#starters" data-i18n="cat.starters">Starters</a>
+      <a class="btn btn-outline btn-sm" href="#mains" data-i18n="cat.mains">Mains</a>
+      <a class="btn btn-outline btn-sm" href="#desserts" data-i18n="cat.desserts">Desserts</a>
+      <a class="btn btn-outline btn-sm" href="#drinks" data-i18n="cat.drinks">Drinks</a>
     </div>
 
     <div class="spacer-menu"></div>
 
     <!-- Starters -->
-    <h3 id="starters">Starters</h3>
+    <h3 id="starters" data-i18n="cat.starters">Starters</h3>
     <div class="grid">
       <div class="card">
-        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026015.png?w=1024" alt="Burrata and tomato">
-        <div class="card-row"><h4>Burrata &amp; Tomato</h4><p class="price">55 DH</p></div>
-        <p class="desc">Creamy burrata, ripe tomatoes, basil oil, toasted pine nuts.</p>
+        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026015.png?w=1024" alt="Burrata &amp; Tomato" data-i18n-alt="i1.n">
+        <div class="card-row"><h4 data-i18n="i1.n">Burrata &amp; Tomato</h4><p class="price">55 DH</p></div>
+        <p class="desc" data-i18n="i1.d">Creamy burrata, ripe tomatoes, basil oil, toasted pine nuts.</p>
       </div>
       <div class="card">
-        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026016.png?w=1024" alt="Grilled octopus">
-        <div class="card-row"><h4>Grilled Octopus</h4><p class="price">75 DH</p></div>
-        <p class="desc">Charred octopus, smoked paprika potatoes, lemon dressing.</p>
+        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026016.png?w=1024" alt="Grilled Octopus" data-i18n-alt="i2.n">
+        <div class="card-row"><h4 data-i18n="i2.n">Grilled Octopus</h4><p class="price">75 DH</p></div>
+        <p class="desc" data-i18n="i2.d">Charred octopus, smoked paprika potatoes, lemon dressing.</p>
       </div>
       <div class="card">
-        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/restorantfood7-6ae5fc6d30baa.png?w=1024" alt="Bowl of pumpkin soup topped with cream, seeds, and herbs beside rustic bread">
-        <div class="card-row"><h4>Pumpkin Soup</h4><p class="price">45 DH</p></div>
-        <p class="desc">Spiced pumpkin, coconut cream, toasted seeds, warm bread.</p>
+        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/restorantfood7-6ae5fc6d30baa.png?w=1024" alt="Pumpkin Soup" data-i18n-alt="i3.n">
+        <div class="card-row"><h4 data-i18n="i3.n">Pumpkin Soup</h4><p class="price">45 DH</p></div>
+        <p class="desc" data-i18n="i3.d">Spiced pumpkin, coconut cream, toasted seeds, warm bread.</p>
       </div>
       <div class="card">
-        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/restorantfood7-6ae5fd0097c14.png?w=1024" alt="Plate of fried calamari with dipping sauce, lemon wedge, and herbs">
-        <div class="card-row"><h4>Crispy Calamari</h4><p class="price">55 DH</p></div>
-        <p class="desc">Lightly fried calamari, garlic aioli, fresh lemon.</p>
+        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/restorantfood7-6ae5fd0097c14.png?w=1024" alt="Crispy Calamari" data-i18n-alt="i4.n">
+        <div class="card-row"><h4 data-i18n="i4.n">Crispy Calamari</h4><p class="price">55 DH</p></div>
+        <p class="desc" data-i18n="i4.d">Lightly fried calamari, garlic aioli, fresh lemon.</p>
       </div>
     </div>
 
     <div class="spacer-32"></div>
 
     <!-- Mains -->
-    <h3 id="mains">Mains</h3>
+    <h3 id="mains" data-i18n="cat.mains">Mains</h3>
     <div class="grid">
       <div class="card">
-        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026030.jpg?w=1024" alt="Braised lamb shank">
-        <div class="card-row"><h4>Braised Lamb Shank</h4><p class="price">130 DH</p></div>
-        <p class="desc">Eight-hour lamb, root vegetable purée, rosemary jus.</p>
+        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026030.jpg?w=1024" alt="Braised Lamb Shank" data-i18n-alt="i5.n">
+        <div class="card-row"><h4 data-i18n="i5.n">Braised Lamb Shank</h4><p class="price">130 DH</p></div>
+        <p class="desc" data-i18n="i5.d">Eight-hour lamb, root vegetable purée, rosemary jus.</p>
       </div>
       <div class="card">
-        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/restorantfood7-6ae60b7d3ad4d.png?w=1024" alt="Crispy-skinned fish with vegetables, lemon, and white wine">
-        <div class="card-row"><h4>Pan-Seared Sea Bass</h4><p class="price">120 DH</p></div>
-        <p class="desc">Crisp skin, saffron sauce, charred greens, new potatoes.</p>
+        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/restorantfood7-6ae60b7d3ad4d.png?w=1024" alt="Pan-Seared Sea Bass" data-i18n-alt="i6.n">
+        <div class="card-row"><h4 data-i18n="i6.n">Pan-Seared Sea Bass</h4><p class="price">120 DH</p></div>
+        <p class="desc" data-i18n="i6.d">Crisp skin, saffron sauce, charred greens, new potatoes.</p>
       </div>
       <div class="card">
-        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/restorantfood7-6ae60acc1e552.png?w=1024" alt="Grilled bone-in steak with roasted potatoes, asparagus, and sauce">
-        <div class="card-row"><h4>Grilled Ribeye</h4><p class="price">160 DH</p></div>
-        <p class="desc">300 g ribeye, peppercorn sauce, hand-cut fries.</p>
+        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/restorantfood7-6ae60acc1e552.png?w=1024" alt="Grilled Ribeye" data-i18n-alt="i7.n">
+        <div class="card-row"><h4 data-i18n="i7.n">Grilled Ribeye</h4><p class="price">160 DH</p></div>
+        <p class="desc" data-i18n="i7.d">300 g ribeye, peppercorn sauce, hand-cut fries.</p>
       </div>
     </div>
 
     <div class="spacer-32"></div>
 
     <!-- Desserts -->
-    <h3 id="desserts">Desserts</h3>
+    <h3 id="desserts" data-i18n="cat.desserts">Desserts</h3>
     <div class="grid">
       <div class="card">
-        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026021-1.png?w=1024" alt="Chocolate fondant">
-        <div class="card-row"><h4>Chocolate Fondant</h4><p class="price">45 DH</p></div>
-        <p class="desc">Warm dark chocolate centre, vanilla ice cream.</p>
+        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026021-1.png?w=1024" alt="Chocolate Fondant" data-i18n-alt="i8.n">
+        <div class="card-row"><h4 data-i18n="i8.n">Chocolate Fondant</h4><p class="price">45 DH</p></div>
+        <p class="desc" data-i18n="i8.d">Warm dark chocolate centre, vanilla ice cream.</p>
       </div>
       <div class="card">
-        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026028.jpg?w=1024" alt="Crème brûlée">
-        <div class="card-row"><h4>Crème Brûlée</h4><p class="price">40 DH</p></div>
-        <p class="desc">Classic vanilla custard with a caramelised crust.</p>
+        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026028.jpg?w=1024" alt="Crème Brûlée" data-i18n-alt="i9.n">
+        <div class="card-row"><h4 data-i18n="i9.n">Crème Brûlée</h4><p class="price">40 DH</p></div>
+        <p class="desc" data-i18n="i9.d">Classic vanilla custard with a caramelised crust.</p>
       </div>
       <div class="card">
-        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026024.jpg?w=1024" alt="Fruit tart">
-        <div class="card-row"><h4>Fruit Tart</h4><p class="price">40 DH</p></div>
-        <p class="desc">Buttery pastry, almond cream, fruit of the season.</p>
+        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026024.jpg?w=1024" alt="Fruit Tart" data-i18n-alt="i10.n">
+        <div class="card-row"><h4 data-i18n="i10.n">Fruit Tart</h4><p class="price">40 DH</p></div>
+        <p class="desc" data-i18n="i10.d">Buttery pastry, almond cream, fruit of the season.</p>
       </div>
       <div class="card">
-        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026027-1.jpg?w=1024" alt="Affogato">
-        <div class="card-row"><h4>Affogato</h4><p class="price">35 DH</p></div>
-        <p class="desc">Vanilla gelato with a shot of hot espresso.</p>
+        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026027-1.jpg?w=1024" alt="Affogato" data-i18n-alt="i11.n">
+        <div class="card-row"><h4 data-i18n="i11.n">Affogato</h4><p class="price">35 DH</p></div>
+        <p class="desc" data-i18n="i11.d">Vanilla gelato with a shot of hot espresso.</p>
       </div>
     </div>
 
     <div class="spacer-32"></div>
 
     <!-- Drinks -->
-    <h3 id="drinks">Drinks</h3>
+    <h3 id="drinks" data-i18n="cat.drinks">Drinks</h3>
     <div class="grid">
       <div class="card">
-        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026025.jpg?w=1024" alt="Mint lemonade">
-        <div class="card-row"><h4>Mint Lemonade</h4><p class="price">25 DH</p></div>
-        <p class="desc">Pressed lemon, fresh mint, a touch of honey.</p>
+        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026025.jpg?w=1024" alt="Mint Lemonade" data-i18n-alt="i12.n">
+        <div class="card-row"><h4 data-i18n="i12.n">Mint Lemonade</h4><p class="price">25 DH</p></div>
+        <p class="desc" data-i18n="i12.d">Pressed lemon, fresh mint, a touch of honey.</p>
       </div>
       <div class="card">
-        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026026.jpg?w=1024" alt="House mocktail">
-        <div class="card-row"><h4>House Mocktail</h4><p class="price">35 DH</p></div>
-        <p class="desc">Seasonal fruit, ginger, sparkling water.</p>
+        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026026.jpg?w=1024" alt="House Mocktail" data-i18n-alt="i13.n">
+        <div class="card-row"><h4 data-i18n="i13.n">House Mocktail</h4><p class="price">35 DH</p></div>
+        <p class="desc" data-i18n="i13.d">Seasonal fruit, ginger, sparkling water.</p>
       </div>
       <div class="card">
-        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026023-1.jpg?w=1024" alt="Specialty coffee">
-        <div class="card-row"><h4>Specialty Coffee</h4><p class="price">20 DH</p></div>
-        <p class="desc">Espresso, cappuccino, flat white or filter.</p>
+        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026023-1.jpg?w=1024" alt="Specialty Coffee" data-i18n-alt="i14.n">
+        <div class="card-row"><h4 data-i18n="i14.n">Specialty Coffee</h4><p class="price">20 DH</p></div>
+        <p class="desc" data-i18n="i14.d">Espresso, cappuccino, flat white or filter.</p>
       </div>
       <div class="card">
-        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026022-1.png?w=1024" alt="Artisan tea">
-        <div class="card-row"><h4>Artisan Tea</h4><p class="price">20 DH</p></div>
-        <p class="desc">A rotating selection of loose-leaf teas.</p>
+        <img loading="lazy" src="https://restorantfood7.wordpress.com/wp-content/uploads/2026/10/1000026022-1.png?w=1024" alt="Artisan Tea" data-i18n-alt="i15.n">
+        <div class="card-row"><h4 data-i18n="i15.n">Artisan Tea</h4><p class="price">20 DH</p></div>
+        <p class="desc" data-i18n="i15.d">A rotating selection of loose-leaf teas.</p>
       </div>
     </div>
 
     <div class="spacer-16"></div>
-    <p class="note">Please tell us about any allergies or dietary needs — we'll be happy to adapt.</p>
+    <p class="note" data-i18n="menu.allergy">Please tell us about any allergies or dietary needs — we'll be happy to adapt.</p>
   </div>
 </section>
 
 <!-- RESERVATIONS -->
 <section class="section bg-a" id="reserve">
   <div class="inner">
-    <p class="eyebrow">Reservations</p>
-    <h2>Book your table</h2>
-    <p class="muted">Send us your request on WhatsApp and we will confirm it with you directly.</p>
+    <p class="eyebrow" data-i18n="res.eyebrow">Reservations</p>
+    <h2 data-i18n="res.title">Book your table</h2>
+    <p class="muted" data-i18n="res.text">Send us your request on WhatsApp and we will confirm it with you directly.</p>
     <div class="buttons">
-      <a class="btn btn-solid" href="https://wa.me/0633553539?text=Hello%2C%20I%20would%20like%20to%20book%20a%20table">Book on WhatsApp</a>
-      <a class="btn btn-outline" href="tel:+112633553639">Call us</a>
-      <a class="btn btn-outline" href="mailto:glory.7tr@gmail.com">Contact us</a>
+      <a class="btn btn-solid" data-wa href="https://wa.me/0633553539?text=Hello%2C%20I%20would%20like%20to%20book%20a%20table" data-i18n="hero.book">Book on WhatsApp</a>
+      <a class="btn btn-outline" href="tel:+112633553639" data-i18n="res.call">Call us</a>
+      <a class="btn btn-outline" href="mailto:glory.7tr@gmail.com" data-i18n="res.contact">Contact us</a>
     </div>
     <div class="spacer-16"></div>
-    <h3 class="hours-title">Opening hours</h3>
-    <p class="hours">Monday – Thursday: 12:00 – 23:00<br>Friday – Saturday: 12:00 – 00:00<br>Sunday: 12:00 – 22:00</p>
+    <h3 class="hours-title" data-i18n="hours.title">Opening hours</h3>
+    <p class="hours">
+      <span data-i18n="hours.l1">Monday – Thursday: 12:00 – 23:00</span>
+      <span data-i18n="hours.l2">Friday – Saturday: 12:00 – 00:00</span>
+      <span data-i18n="hours.l3">Sunday: 12:00 – 22:00</span>
+    </p>
   </div>
 </section>
 
 <!-- CONTACT -->
 <section class="section bg-b" id="contact">
   <div class="inner">
-    <p class="eyebrow">Visit us</p>
-    <h2>Find your way to Savora</h2>
+    <p class="eyebrow" data-i18n="contact.eyebrow">Visit us</p>
+    <h2 data-i18n="contact.title">Find your way to Savora</h2>
     <div class="spacer-24"></div>
     <div class="columns">
       <div>
-        <h4>Address</h4>
-        <p class="muted">12 Main Street, Your City</p>
+        <h4 data-i18n="contact.addr.t">Address</h4>
+        <p class="muted" data-i18n="contact.addr.v">12 Main Street, Your City</p>
       </div>
       <div>
-        <h4>Phone</h4>
-        <p class="muted">+112 0633553639</p>
+        <h4 data-i18n="contact.phone.t">Phone</h4>
+        <p class="muted"><span class="ltr">+112 0633553639</span></p>
       </div>
       <div>
-        <h4>Email</h4>
-        <p class="muted">glory.7tr@gmail.com</p>
+        <h4 data-i18n="contact.email.t">Email</h4>
+        <p class="muted"><span class="ltr">glory.7tr@gmail.com</span></p>
       </div>
     </div>
     <div class="buttons">
-      <a class="btn btn-solid" href="https://www.google.com/maps/search/?api=1&amp;query=12%20Main%20Street%2C%20Your%20City">Get directions</a>
+      <a class="btn btn-solid" href="https://www.google.com/maps/search/?api=1&amp;query=12%20Main%20Street%2C%20Your%20City" data-i18n="contact.directions">Get directions</a>
     </div>
   </div>
 </section>
@@ -372,9 +418,236 @@
 <!-- FOOTER -->
 <footer class="section bg-b">
   <div class="inner" style="max-width:1100px">
-    <p class="note">© 2026 Savora. All rights reserved.</p>
+    <p class="note" data-i18n="footer">© 2026 Savora. All rights reserved.</p>
   </div>
 </footer>
+
+<script>
+const I18N = {
+  en: {
+    "meta.title": "Savora — Restaurant & Bar",
+    "wa.msg": "Hello, I would like to book a table",
+    "hero.eyebrow": "Restaurant & Bar",
+    "hero.title": "Taste the art of good food",
+    "hero.lead": "Seasonal ingredients, honest cooking and warm hospitality — a table where every meal feels like an occasion.",
+    "hero.book": "Book on WhatsApp",
+    "hero.menu": "View the menu",
+    "about.eyebrow": "Our story",
+    "about.title": "Cooked with care, served with heart",
+    "about.text": "Savora began with a simple idea: great food should feel generous. Our chefs work every morning with local farmers, fishermen and bakers, turning the best of each season into dishes that are familiar, surprising and always honest.",
+    "about.c1.t": "Fresh & local",
+    "about.c1.d": "Ingredients from nearby farms and markets, delivered daily.",
+    "about.c2.t": "Made in-house",
+    "about.c2.d": "Bread, sauces and desserts prepared from scratch every day.",
+    "about.c3.t": "Warm service",
+    "about.c3.d": "A friendly team that makes every visit feel special.",
+    "menu.eyebrow": "The menu",
+    "menu.title": "Made fresh, every day",
+    "menu.sub": "Tap a section to jump to it. Our full menu changes with the seasons.",
+    "cat.starters": "Starters",
+    "cat.mains": "Mains",
+    "cat.desserts": "Desserts",
+    "cat.drinks": "Drinks",
+    "menu.allergy": "Please tell us about any allergies or dietary needs — we'll be happy to adapt.",
+    "i1.n": "Burrata & Tomato", "i1.d": "Creamy burrata, ripe tomatoes, basil oil, toasted pine nuts.",
+    "i2.n": "Grilled Octopus", "i2.d": "Charred octopus, smoked paprika potatoes, lemon dressing.",
+    "i3.n": "Pumpkin Soup", "i3.d": "Spiced pumpkin, coconut cream, toasted seeds, warm bread.",
+    "i4.n": "Crispy Calamari", "i4.d": "Lightly fried calamari, garlic aioli, fresh lemon.",
+    "i5.n": "Braised Lamb Shank", "i5.d": "Eight-hour lamb, root vegetable purée, rosemary jus.",
+    "i6.n": "Pan-Seared Sea Bass", "i6.d": "Crisp skin, saffron sauce, charred greens, new potatoes.",
+    "i7.n": "Grilled Ribeye", "i7.d": "300 g ribeye, peppercorn sauce, hand-cut fries.",
+    "i8.n": "Chocolate Fondant", "i8.d": "Warm dark chocolate centre, vanilla ice cream.",
+    "i9.n": "Crème Brûlée", "i9.d": "Classic vanilla custard with a caramelised crust.",
+    "i10.n": "Fruit Tart", "i10.d": "Buttery pastry, almond cream, fruit of the season.",
+    "i11.n": "Affogato", "i11.d": "Vanilla gelato with a shot of hot espresso.",
+    "i12.n": "Mint Lemonade", "i12.d": "Pressed lemon, fresh mint, a touch of honey.",
+    "i13.n": "House Mocktail", "i13.d": "Seasonal fruit, ginger, sparkling water.",
+    "i14.n": "Specialty Coffee", "i14.d": "Espresso, cappuccino, flat white or filter.",
+    "i15.n": "Artisan Tea", "i15.d": "A rotating selection of loose-leaf teas.",
+    "res.eyebrow": "Reservations",
+    "res.title": "Book your table",
+    "res.text": "Send us your request on WhatsApp and we will confirm it with you directly.",
+    "res.call": "Call us",
+    "res.contact": "Contact us",
+    "hours.title": "Opening hours",
+    "hours.l1": "Monday – Thursday: 12:00 – 23:00",
+    "hours.l2": "Friday – Saturday: 12:00 – 00:00",
+    "hours.l3": "Sunday: 12:00 – 22:00",
+    "contact.eyebrow": "Visit us",
+    "contact.title": "Find your way to Savora",
+    "contact.addr.t": "Address",
+    "contact.addr.v": "12 Main Street, Your City",
+    "contact.phone.t": "Phone",
+    "contact.email.t": "Email",
+    "contact.directions": "Get directions",
+    "footer": "© 2026 Savora. All rights reserved."
+  },
+  fr: {
+    "meta.title": "Savora — Restaurant & Bar",
+    "wa.msg": "Bonjour, je souhaite réserver une table",
+    "hero.eyebrow": "Restaurant & Bar",
+    "hero.title": "Savourez l'art de la bonne cuisine",
+    "hero.lead": "Des produits de saison, une cuisine sincère et un accueil chaleureux — une table où chaque repas devient une occasion à part.",
+    "hero.book": "Réserver sur WhatsApp",
+    "hero.menu": "Voir le menu",
+    "about.eyebrow": "Notre histoire",
+    "about.title": "Cuisiné avec soin, servi avec cœur",
+    "about.text": "Savora est née d'une idée simple : la bonne cuisine doit être généreuse. Chaque matin, nos chefs travaillent avec des agriculteurs, des pêcheurs et des boulangers locaux pour transformer le meilleur de chaque saison en plats familiers, surprenants et toujours sincères.",
+    "about.c1.t": "Frais et local",
+    "about.c1.d": "Des produits issus des fermes et des marchés voisins, livrés chaque jour.",
+    "about.c2.t": "Fait maison",
+    "about.c2.d": "Pain, sauces et desserts préparés de A à Z chaque jour.",
+    "about.c3.t": "Service chaleureux",
+    "about.c3.d": "Une équipe souriante qui rend chaque visite spéciale.",
+    "menu.eyebrow": "La carte",
+    "menu.title": "Préparé frais, chaque jour",
+    "menu.sub": "Touchez une section pour y accéder. Notre carte complète change au fil des saisons.",
+    "cat.starters": "Entrées",
+    "cat.mains": "Plats",
+    "cat.desserts": "Desserts",
+    "cat.drinks": "Boissons",
+    "menu.allergy": "Merci de nous signaler toute allergie ou tout régime alimentaire — nous nous ferons un plaisir de nous adapter.",
+    "i1.n": "Burrata et tomate", "i1.d": "Burrata crémeuse, tomates mûres, huile de basilic, pignons de pin grillés.",
+    "i2.n": "Poulpe grillé", "i2.d": "Poulpe grillé, pommes de terre au paprika fumé, vinaigrette au citron.",
+    "i3.n": "Soupe de potiron", "i3.d": "Potiron épicé, crème de coco, graines grillées, pain chaud.",
+    "i4.n": "Calamars croustillants", "i4.d": "Calamars légèrement frits, aïoli à l'ail, citron frais.",
+    "i5.n": "Souris d'agneau braisée", "i5.d": "Agneau cuit huit heures, purée de légumes racines, jus au romarin.",
+    "i6.n": "Bar poêlé", "i6.d": "Peau croustillante, sauce au safran, légumes verts grillés, pommes de terre nouvelles.",
+    "i7.n": "Entrecôte grillée", "i7.d": "Entrecôte de 300 g, sauce au poivre, frites coupées à la main.",
+    "i8.n": "Fondant au chocolat", "i8.d": "Cœur coulant de chocolat noir, glace à la vanille.",
+    "i9.n": "Crème brûlée", "i9.d": "Crème vanillée classique à la croûte caramélisée.",
+    "i10.n": "Tarte aux fruits", "i10.d": "Pâte sablée, crème d'amande, fruits de saison.",
+    "i11.n": "Affogato", "i11.d": "Glace à la vanille avec un shot d'espresso chaud.",
+    "i12.n": "Citronnade à la menthe", "i12.d": "Citron pressé, menthe fraîche, une touche de miel.",
+    "i13.n": "Mocktail maison", "i13.d": "Fruits de saison, gingembre, eau pétillante.",
+    "i14.n": "Café de spécialité", "i14.d": "Espresso, cappuccino, flat white ou café filtre.",
+    "i15.n": "Thé artisanal", "i15.d": "Une sélection tournante de thés en feuilles.",
+    "res.eyebrow": "Réservations",
+    "res.title": "Réservez votre table",
+    "res.text": "Envoyez-nous votre demande sur WhatsApp et nous vous la confirmerons directement.",
+    "res.call": "Appelez-nous",
+    "res.contact": "Contactez-nous",
+    "hours.title": "Horaires d'ouverture",
+    "hours.l1": "Lundi – Jeudi : 12h00 – 23h00",
+    "hours.l2": "Vendredi – Samedi : 12h00 – 00h00",
+    "hours.l3": "Dimanche : 12h00 – 22h00",
+    "contact.eyebrow": "Venez nous voir",
+    "contact.title": "Trouvez le chemin vers Savora",
+    "contact.addr.t": "Adresse",
+    "contact.addr.v": "12 Rue Principale, Votre ville",
+    "contact.phone.t": "Téléphone",
+    "contact.email.t": "E-mail",
+    "contact.directions": "Itinéraire",
+    "footer": "© 2026 Savora. Tous droits réservés."
+  },
+  ar: {
+    "meta.title": "سافورا — مطعم وبار",
+    "wa.msg": "مرحبًا، أودّ حجز طاولة",
+    "hero.eyebrow": "مطعم وبار",
+    "hero.title": "تذوّق فنّ الطعام الراقي",
+    "hero.lead": "مكوّنات موسمية، وطبخ صادق، وضيافة دافئة — مائدة تتحوّل فيها كل وجبة إلى مناسبة.",
+    "hero.book": "احجز عبر واتساب",
+    "hero.menu": "عرض القائمة",
+    "about.eyebrow": "قصتنا",
+    "about.title": "نطبخ بعناية ونقدّم بحب",
+    "about.text": "بدأت «سافورا» بفكرة بسيطة: الطعام الجيد ينبغي أن يكون سخيًا. يعمل طهاتنا كل صباح مع المزارعين والصيادين والخبّازين المحليين، ليحوّلوا أفضل ما في كل موسم إلى أطباق مألوفة ومدهشة وصادقة دائمًا.",
+    "about.c1.t": "طازج ومحلي",
+    "about.c1.d": "مكوّنات من المزارع والأسواق القريبة، تصلنا يوميًا.",
+    "about.c2.t": "صناعة منزلية",
+    "about.c2.d": "الخبز والصلصات والحلويات تُحضَّر من الصفر كل يوم.",
+    "about.c3.t": "خدمة دافئة",
+    "about.c3.d": "فريق ودود يجعل كل زيارة مميزة.",
+    "menu.eyebrow": "القائمة",
+    "menu.title": "طازج كل يوم",
+    "menu.sub": "اضغط على أحد الأقسام للانتقال إليه. تتغيّر قائمتنا الكاملة مع المواسم.",
+    "cat.starters": "المقبّلات",
+    "cat.mains": "الأطباق الرئيسية",
+    "cat.desserts": "الحلويات",
+    "cat.drinks": "المشروبات",
+    "menu.allergy": "يُرجى إعلامنا بأي حساسية أو احتياجات غذائية — يسعدنا التكيّف معها.",
+    "i1.n": "بوراتا وطماطم", "i1.d": "جبن بوراتا كريمي، طماطم ناضجة، زيت الريحان، وصنوبر محمّص.",
+    "i2.n": "أخطبوط مشوي", "i2.d": "أخطبوط مشوي، بطاطس بالبابريكا المدخّنة، وصلصة الليمون.",
+    "i3.n": "شوربة القرع", "i3.d": "قرع متبّل، كريمة جوز الهند، بذور محمّصة، وخبز دافئ.",
+    "i4.n": "كالاماري مقرمش", "i4.d": "كالاماري مقلي بخفّة، أيولي بالثوم، وليمون طازج.",
+    "i5.n": "ساق ضأن مطهوّ ببطء", "i5.d": "لحم ضأن مطهوّ ثماني ساعات، هريس خضار جذرية، ومرق إكليل الجبل.",
+    "i6.n": "قاروص محمّر في المقلاة", "i6.d": "جلد مقرمش، صلصة الزعفران، خضار مشوية، وبطاطس جديدة.",
+    "i7.n": "ريب آي مشوي", "i7.d": "ريب آي 300 غ، صلصة الفلفل الأسود، وبطاطس مقلية مقطّعة يدويًا.",
+    "i8.n": "فوندان الشوكولاتة", "i8.d": "قلب دافئ من الشوكولاتة الداكنة مع آيس كريم الفانيليا.",
+    "i9.n": "كريم بروليه", "i9.d": "كاسترد الفانيليا الكلاسيكي بطبقة كراميل مقرمشة.",
+    "i10.n": "تارت الفواكه", "i10.d": "عجينة بالزبدة، كريمة اللوز، وفواكه الموسم.",
+    "i11.n": "أفوغاتو", "i11.d": "جيلاتو الفانيليا مع جرعة إسبريسو ساخن.",
+    "i12.n": "ليموناضة بالنعناع", "i12.d": "ليمون معصور، نعناع طازج، ولمسة عسل.",
+    "i13.n": "موكتيل الدار", "i13.d": "فواكه الموسم، زنجبيل، وماء فوّار.",
+    "i14.n": "قهوة مختصّة", "i14.d": "إسبريسو أو كابتشينو أو فلات وايت أو قهوة مفلترة.",
+    "i15.n": "شاي حِرفي", "i15.d": "تشكيلة متجدّدة من الشاي الورقي.",
+    "res.eyebrow": "الحجوزات",
+    "res.title": "احجز طاولتك",
+    "res.text": "أرسل لنا طلبك عبر واتساب وسنؤكده معك مباشرة.",
+    "res.call": "اتصل بنا",
+    "res.contact": "تواصل معنا",
+    "hours.title": "ساعات العمل",
+    "hours.l1": "من الاثنين إلى الخميس: 12:00 – 23:00",
+    "hours.l2": "من الجمعة إلى السبت: 12:00 – 00:00",
+    "hours.l3": "الأحد: 12:00 – 22:00",
+    "contact.eyebrow": "زورونا",
+    "contact.title": "اعثر على طريقك إلى سافورا",
+    "contact.addr.t": "العنوان",
+    "contact.addr.v": "12 الشارع الرئيسي، مدينتك",
+    "contact.phone.t": "الهاتف",
+    "contact.email.t": "البريد الإلكتروني",
+    "contact.directions": "الاتجاهات",
+    "footer": "© 2026 سافورا. جميع الحقوق محفوظة."
+  }
+};
+/* END-DICT */
+
+(function () {
+  var WA = "https://wa.me/0633553539?text=";
+  var KEY = "savora-lang";
+
+  function setLang(lang) {
+    if (!I18N[lang]) lang = "en";
+    var d = I18N[lang];
+    var root = document.documentElement;
+    root.lang = lang;
+    root.dir = lang === "ar" ? "rtl" : "ltr";
+    document.title = d["meta.title"];
+
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      var v = d[el.getAttribute("data-i18n")];
+      if (v != null) el.textContent = v;
+    });
+    document.querySelectorAll("[data-i18n-alt]").forEach(function (el) {
+      var v = d[el.getAttribute("data-i18n-alt")];
+      if (v != null) el.alt = v;
+    });
+    document.querySelectorAll("[data-wa]").forEach(function (el) {
+      el.href = WA + encodeURIComponent(d["wa.msg"]);
+    });
+    document.querySelectorAll(".lang-switch button").forEach(function (b) {
+      b.setAttribute("aria-pressed", b.getAttribute("data-lang") === lang ? "true" : "false");
+    });
+    try { localStorage.setItem(KEY, lang); } catch (e) {}
+  }
+
+  function initialLang() {
+    var fromUrl = new URLSearchParams(location.search).get("lang");
+    if (fromUrl && I18N[fromUrl]) return fromUrl;
+    try {
+      var saved = localStorage.getItem(KEY);
+      if (saved && I18N[saved]) return saved;
+    } catch (e) {}
+    var nav = (navigator.language || "en").slice(0, 2).toLowerCase();
+    return I18N[nav] ? nav : "en";
+  }
+
+  document.querySelectorAll(".lang-switch button").forEach(function (b) {
+    b.addEventListener("click", function () { setLang(b.getAttribute("data-lang")); });
+  });
+
+  setLang(initialLang());
+})();
+</script>
 
 </body>
 </html>
